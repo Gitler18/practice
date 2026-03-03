@@ -11,6 +11,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-    </application>
+        <intent-filter>
+            <action android:name="MainActivity"/> <category  android:name="MainActivity.LAUNCHER"/>
+        </intent-filter>
 
 </manifest>

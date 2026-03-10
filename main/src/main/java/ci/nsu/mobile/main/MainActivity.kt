@@ -1,21 +1,22 @@
 package ci.nsu.mobile.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ci.nsu.mobile.main.ui.theme.PracticeTheme
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
 
-    private val colorsMap = mapOf(
+    private val colors = mapOf(
         "Red" to Color.Red,
         "Orange" to Color(0xFFFFA500),
         "Yellow" to Color.Yellow,
@@ -24,28 +25,73 @@ class MainActivity : ComponentActivity() {
         "Indigo" to Color(0xFF4B0082),
         "Violet" to Color(0xFF8F00FF)
     )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContent { ColorScreen(colors) }
+    }
+}
 
-        setContent {
-            MainScreen(colorsMap)
+@Composable
+fun ColorScreen(colors: Map<String, Color>) {
+    var text by remember { mutableStateOf("") }
+    var buttonColor by remember { mutableStateOf(Color(0xFFACAFB0)) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    )
+        OutlinedTextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Введите цвет") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+
+                val color = colors[text]
+
+                if (color != null) {
+                    buttonColor = color
+                } else {
+                    Log.d("COLOR_LOG", "Цвет \"$text\" не найден")
+                }
+
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
+        )
+            Text("Применить цвет")
+        Spacer(modifier = Modifier.height(24.dp))
+
+        colors.forEach { (name, color) ->
+            ColorItem(name, color)
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
-}
+
+
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun ColorItem(name: String, color: Color) {
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .background(color, RoundedCornerShape(12.dp)),
+        contentAlignment = Alignment.CenterStart
     )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PracticeTheme {
-        Greeting("Android")
+        Text(
+            text = name,
+            modifier = Modifier.padding(start = 16.dp),
+            color = Color.White
+        )
     }
-}

@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { ColorScreen(colors) }
+            setContent { ColorScreen(colors) }
     }
 }
 
@@ -40,7 +40,7 @@ fun ColorScreen(colors: Map<String, Color>) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-    )
+    ) {
         OutlinedTextField(
             value = text,
             onValueChange = { text = it },
@@ -66,8 +66,8 @@ fun ColorScreen(colors: Map<String, Color>) {
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
-        )
-            Text("Применить цвет")
+            {
+        Text("Применить цвет")
         Spacer(modifier = Modifier.height(24.dp))
 
         colors.forEach { (name, color) ->
@@ -78,16 +78,21 @@ fun ColorScreen(colors: Map<String, Color>) {
 
 
 
-@Composable
-fun ColorItem(name: String, color: Color) {
+    @Composable
+    fun ColorItem(name: String, color: Color) {
+        Row {
+            Box(modifier = Modifier.size(20.dp).background(color))
+            Text(text = name)
+        }
+    }
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .background(color, RoundedCornerShape(12.dp)),
-        contentAlignment = Alignment.CenterStart
-    )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(color, RoundedCornerShape(12.dp)),
+            contentAlignment = Alignment.CenterStart
+        )
 
         Text(
             text = name,
@@ -95,3 +100,4 @@ fun ColorItem(name: String, color: Color) {
             color = Color.White
         )
     }
+}

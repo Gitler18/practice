@@ -5,11 +5,25 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -25,9 +39,10 @@ class MainActivity : ComponentActivity() {
         "Indigo" to Color(0xFF4B0082),
         "Violet" to Color(0xFF8F00FF)
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            setContent { ColorScreen(colors) }
+        setContent { ColorScreen(colors) }
     }
 }
 
@@ -66,8 +81,10 @@ fun ColorScreen(colors: Map<String, Color>) {
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
-            {
-        Text("Применить цвет")
+        ) {
+            Text("Применить цвет")
+        }
+
         Spacer(modifier = Modifier.height(24.dp))
 
         colors.forEach { (name, color) ->
@@ -75,29 +92,22 @@ fun ColorScreen(colors: Map<String, Color>) {
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
+}
 
 
-
-    @Composable
-    fun ColorItem(name: String, color: Color) {
-        Row {
-            Box(modifier = Modifier.size(20.dp).background(color))
-            Text(text = name)
-        }
-    }
-
+@Composable
+fun ColorItem(name: String, color: Color) {
+    Row {
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(color, RoundedCornerShape(12.dp)),
-            contentAlignment = Alignment.CenterStart
+                .size(20.dp)
+                .background(color)
         )
 
-        Text(
-            text = name,
-            modifier = Modifier.padding(start = 16.dp),
-            color = Color.White
-        )
+        Spacer(modifier = Modifier.width(8.dp))
+
+        Text(text = name)
     }
 }
+
+

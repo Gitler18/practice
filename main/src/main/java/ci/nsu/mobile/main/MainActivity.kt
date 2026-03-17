@@ -68,7 +68,11 @@ fun ColorScreen(colors: Map<String, Color>) {
         Button(
             onClick = {
 
-                val color = colors[text]
+                val normalizedText = text.trim().lowercase()
+
+                val color = colors.entries
+                    .find { it.key.lowercase() == normalizedText }
+                    ?.value
 
                 if (color != null) {
                     buttonColor = color

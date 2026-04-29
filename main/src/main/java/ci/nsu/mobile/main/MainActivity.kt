@@ -30,6 +30,7 @@ fun CounterScreen(viewModel: CounterViewModel = viewModel()) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .statusBarsPadding()
     ) {
 
         Text("Счетчик: ${uiState.count}")
@@ -45,6 +46,10 @@ fun CounterScreen(viewModel: CounterViewModel = viewModel()) {
             }
             Button(onClick = { viewModel.reset() }) {
                 Text("Сброс")
+
+            }
+            Button(onClick = { viewModel.clearHistory() }) {
+                Text("Очистить историю")
             }
         }
 
@@ -57,5 +62,7 @@ fun CounterScreen(viewModel: CounterViewModel = viewModel()) {
                 Text(it)
             }
         }
+
     }
+
 }
